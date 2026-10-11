@@ -102,7 +102,7 @@ The `id` attribute is identified as the primary key using:
 @Id
 ```
 
-and its value is automatically generated using:
+Its value is automatically generated using:
 
 ```java
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -144,7 +144,7 @@ The base URL is:
 
 URLs use nouns instead of actions, following REST conventions.
 
-## CRUD endpoints
+## CRUD Endpoints
 
 | HTTP Method | Endpoint | Operation | Status |
 |---|---|---|---|
@@ -160,7 +160,7 @@ URLs use nouns instead of actions, following REST conventions.
 
 ---
 
-## GET — List products
+## GET — List Products
 
 ```text
 GET /api/productos
@@ -202,7 +202,7 @@ If the product does not exist:
 
 ---
 
-## POST — Create product
+## POST — Create Product
 
 ```text
 POST /api/productos
@@ -237,7 +237,7 @@ Example response:
 
 ---
 
-## PUT — Update product
+## PUT — Update Product
 
 ```text
 PUT /api/productos/{id}
@@ -265,7 +265,7 @@ If the product exists:
 200 OK
 ```
 
-If it does not exist:
+If the product does not exist:
 
 ```text
 404 Not Found
@@ -273,7 +273,7 @@ If it does not exist:
 
 ---
 
-## DELETE — Delete product
+## DELETE — Delete Product
 
 ```text
 DELETE /api/productos/{id}
@@ -291,7 +291,7 @@ If the product exists:
 204 No Content
 ```
 
-If it does not exist:
+If the product does not exist:
 
 ```text
 404 Not Found
@@ -299,7 +299,7 @@ If it does not exist:
 
 ---
 
-## English requirement
+## English Requirement
 
 The controller receives HTTP requests and returns the appropriate HTTP responses to the client. The service contains the application logic and coordinates the operations between the controller and the data layer. The repository provides access to the database using Spring Data JPA.
 
@@ -335,11 +335,17 @@ http://localhost:8080/v3/api-docs
 
 Swagger automatically detects the REST controller and documents the available endpoints.
 
-### Swagger evidence
+---
 
-![Swagger endpoints](evidencias/01-swagger-endpoints.png)
+## Swagger Evidence
 
-### POST — Swagger
+The following image shows the documented REST endpoints.
+
+![Swagger endpoints](evidences/01-swagger-endpoints.jpeg)
+
+---
+
+## POST Test with Swagger
 
 A product was created using:
 
@@ -353,7 +359,7 @@ Expected status:
 201 Created
 ```
 
-![Swagger POST](evidencias/02-swagger-post-201.png)
+![Swagger POST 201](evidences/02-swagger-post-201.jpeg)
 
 ---
 
@@ -361,7 +367,7 @@ Expected status:
 
 Postman was used to test the API endpoints and verify the HTTP status codes.
 
-## Test 1 — GET products
+## Test 1 — GET Products
 
 Request:
 
@@ -375,11 +381,11 @@ Expected result:
 200 OK
 ```
 
-![Postman GET](evidencias/03-postman-get-200.png)
+![Postman GET 200](evidences/03-postman-get-200.jpeg)
 
 ---
 
-## Test 2 — POST product
+## Test 2 — POST Product
 
 Request:
 
@@ -403,11 +409,11 @@ Expected result:
 201 Created
 ```
 
-![Postman POST](evidencias/04-postman-post-201.png)
+![Postman POST 201](evidences/04-postman-post-201.jpeg)
 
 ---
 
-## Test 3 — PUT product
+## Test 3 — PUT Product
 
 Request:
 
@@ -431,7 +437,7 @@ Expected result:
 200 OK
 ```
 
-![Postman PUT](evidencias/05-postman-put-200.png)
+![Postman PUT 200](evidences/05-postman-put-200.jpeg)
 
 ---
 
@@ -449,13 +455,13 @@ Expected result:
 204 No Content
 ```
 
-![Postman DELETE](evidencias/06-postman-delete-204.png)
+![Postman DELETE 204](evidences/06-postman-delete-204.jpeg)
 
 ---
 
 # Error Cases
 
-## 404 — Product not found
+## Error Case 1 — 404 Not Found
 
 After deleting product with ID `2`, the following request was executed:
 
@@ -469,13 +475,21 @@ The API correctly returned:
 404 Not Found
 ```
 
-![Postman 404](evidencias/07-postman-error-404.png)
+![Postman 404](evidences/07-postman-error-404.jpeg)
 
 ---
 
-## 400 — Invalid product
+## Error Case 2 — 400 Bad Request
 
 Validation was also tested using invalid data.
+
+Request:
+
+```text
+POST http://localhost:8080/api/productos
+```
+
+JSON body:
 
 ```json
 {
@@ -499,22 +513,22 @@ because the entity uses validation annotations such as:
 @Positive
 ```
 
-![Postman 400](evidencias/08-postman-error-400.png)
+![Postman 400](evidences/08-postman-error-400.jpeg)
 
 ---
 
 # How to Run
 
-From the project directory:
-
-```bash
-./mvnw spring-boot:run
-```
-
-On Windows PowerShell:
+From the project directory on Windows PowerShell:
 
 ```powershell
 .\mvnw spring-boot:run
+```
+
+On macOS or Linux:
+
+```bash
+./mvnw spring-boot:run
 ```
 
 The API runs at:
@@ -534,29 +548,50 @@ http://localhost:8080/swagger-ui.html
 # Project Structure
 
 ```text
-src/main/java/com/fullstack/productoapi
+producto-api/
 │
-├── controller
-│   └── ProductoController.java
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── fullstack/
+│       │           └── productoapi/
+│       │               ├── controller/
+│       │               │   └── ProductoController.java
+│       │               ├── entity/
+│       │               │   └── Producto.java
+│       │               ├── repository/
+│       │               │   └── ProductoRepository.java
+│       │               ├── service/
+│       │               │   └── ProductoService.java
+│       │               └── ProductoApiApplication.java
+│       └── resources/
+│           └── application.properties
 │
-├── entity
-│   └── Producto.java
+├── evidences/
+│   ├── 01-swagger-endpoints.jpeg
+│   ├── 02-swagger-post-201.jpeg
+│   ├── 03-postman-get-200.jpeg
+│   ├── 04-postman-post-201.jpeg
+│   ├── 05-postman-put-200.jpeg
+│   ├── 06-postman-delete-204.jpeg
+│   ├── 07-postman-error-404.jpeg
+│   └── 08-postman-error-400.jpeg
 │
-├── repository
-│   └── ProductoRepository.java
-│
-├── service
-│   └── ProductoService.java
-│
-└── ProductoApiApplication.java
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+└── README.md
 ```
-
-The project separates responsibilities using Controller, Service and Repository layers.
 
 ---
 
 # Conclusion
 
-The project implements a complete REST CRUD API using Spring Boot and a layered architecture. Spring Data JPA provides persistence and object-relational mapping, while Swagger documents the endpoints and Postman verifies successful and error responses.
+The project implements a complete REST CRUD API using Spring Boot and a layered architecture.
 
-The implementation covers entity mapping, repository access, application logic, REST controllers, HTTP status codes, validation, API documentation and endpoint testing.
+Spring Data JPA provides persistence and object-relational mapping, while the service layer contains the application logic and the controller exposes the REST endpoints.
+
+Swagger is used to document the API and Postman is used to verify successful responses and error cases.
+
+The implementation covers entity mapping, repository access, application logic, CRUD operations, HTTP status codes, validation, API documentation and endpoint testing.
