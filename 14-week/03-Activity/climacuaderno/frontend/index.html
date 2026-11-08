@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ClimaCuaderno, a private microclimate field journal." />
+    <title>ClimaCuaderno — Private microclimate journal</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/main.mjs"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="ClimaCuaderno home"><span class="brand-icon">◈</span> ClimaCuaderno<span class="brand-dot">.</span></a>
+      <span class="topbar-note">FIELD RECORDS / PRIVATE ACCESS</span>
+      <button id="logout-button" class="button secondary compact" type="button" hidden>Sign out</button>
+    </header>
+
+    <main>
+      <section id="auth-screen" class="auth-layout" aria-labelledby="hero-title">
+        <div class="intro">
+          <p class="eyebrow">ENVIRONMENTAL FIELD JOURNAL</p>
+          <h1 id="hero-title">A clearer view of every <em>microclimate.</em></h1>
+          <p class="intro-copy">Record humidity and temperature readings in a journal that only you can access. Small observations, meaningful patterns.</p>
+          <div class="intro-art" aria-hidden="true">
+            <div class="art-label">CONDITIONS / SAMPLE VIEW</div>
+            <div class="art-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="art-footer"><span>MONITOR YOUR ENVIRONMENT</span><span>24° / 52%</span></div>
+          </div>
+        </div>
+        <section class="auth-card" aria-labelledby="auth-title">
+          <div class="auth-icon" aria-hidden="true">↗</div>
+          <p class="eyebrow">YOUR PRIVATE WORKSPACE</p>
+          <h2 id="auth-title">Welcome back.</h2>
+          <p id="auth-description" class="muted">Sign in to see your field readings.</p>
+          <form id="auth-form" novalidate>
+            <label for="email-input">Email address</label>
+            <input id="email-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required maxlength="254" />
+            <label for="password-input">Password</label>
+            <input id="password-input" type="password" name="password" placeholder="At least 10 characters to register" autocomplete="current-password" required />
+            <button id="auth-submit" type="submit" class="button primary full">Sign in <span aria-hidden="true">→</span></button>
+          </form>
+          <p id="auth-message" class="message" role="status" aria-live="polite"></p>
+          <p class="switch-copy"><span id="mode-question">New to this journal?</span> <button id="mode-button" class="text-button" type="button">Create account</button></p>
+          <div class="card-foot">JWT PROTECTED · LOCAL H2 STORAGE</div>
+        </section>
+      </section>
+
+      <section id="dashboard" class="dashboard" hidden aria-labelledby="dash-title">
+        <div class="dashboard-heading">
+          <div>
+            <p class="eyebrow">PERSONAL FIELD STATION</p>
+            <h1 id="dash-title">Your observations<span class="brand-dot">.</span></h1>
+            <p class="muted">Signed in as <strong id="account-label"></strong></p>
+          </div>
+          <span class="private-chip">● PRIVATE DASHBOARD</span>
+        </div>
+        <div class="stats" aria-label="Observation summary">
+          <article class="stat-card"><span class="stat-label">TOTAL READINGS</span><strong id="total-stat">0</strong><span class="stat-note">Observations saved</span></article>
+          <article class="stat-card"><span class="stat-label">BALANCED</span><strong id="balanced-stat">0</strong><span class="stat-note">Within reference limits</span></article>
+          <article class="stat-card"><span class="stat-label">NEEDS REVIEW</span><strong id="review-stat">0</strong><span class="stat-note">Outside reference limits</span></article>
+        </div>
+        <div class="workspace">
+          <section class="panel entry-panel" aria-labelledby="entry-title">
+            <p class="eyebrow">01 / NEW OBSERVATION</p>
+            <h2 id="entry-title">Log a reading</h2>
+            <p class="muted">Measurements are entered manually.</p>
+            <form id="reading-form">
+              <label for="zone-input">Observation zone</label>
+              <input id="zone-input" name="zone" type="text" placeholder="e.g. North greenhouse" minlength="2" maxlength="60" required />
+              <div class="two-inputs">
+                <div><label for="temperature-input">Temperature (°C)</label><input id="temperature-input" name="temperature" type="number" min="-30" max="60" step="0.1" placeholder="24.5" required /></div>
+                <div><label for="humidity-input">Humidity (%)</label><input id="humidity-input" name="humidity" type="number" min="0" max="100" step="0.1" placeholder="52" required /></div>
+              </div>
+              <button id="reading-submit" class="button primary full" type="submit">Save observation <span aria-hidden="true">→</span></button>
+            </form>
+            <p id="reading-message" class="message" role="status" aria-live="polite"></p>
+            <div class="hint">REFERENCE RANGE<br />19–27 °C · 35–65% RH<br /><small>Illustrative thresholds, not safety or scientific certifications.</small></div>
+          </section>
+          <section class="panel history-panel" aria-labelledby="history-title">
+            <div class="history-heading"><div><p class="eyebrow">02 / PRIVATE HISTORY</p><h2 id="history-title">Reading archive</h2></div><button id="refresh-button" class="button secondary compact" type="button">↻ Refresh</button></div>
+            <p id="loading-message" class="muted" role="status" aria-live="polite"></p>
+            <div class="table-wrapper">
+              <table aria-label="Your previous observations">
+                <thead><tr><th>ZONE / TIME</th><th>°C</th><th>RH</th><th>ASSESSMENT</th><th class="action-cell">ACTION</th></tr></thead>
+                <tbody id="readings-table"></tbody>
+              </table>
+            </div>
+            <p id="empty-message" class="empty-state" hidden>No readings yet. Add your first observation using the form.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer>CLIMACUADERNO / V1.0.0 <span>Made for the Fullstack Week 14 activity</span></footer>
+  </body>
+</html>
